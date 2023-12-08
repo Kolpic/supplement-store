@@ -1,6 +1,7 @@
 package org.example.gui;
 
 import org.example.helper.FileReaderSupplements;
+import org.example.model.BaseModel;
 import org.example.model.shoppingcart.ShoppingCart;
 import org.example.model.aminoasid.BaseAminoAcid;
 import org.example.model.protein.BaseProtein;
@@ -27,11 +28,9 @@ public class SwingApp extends JFrame {
         FileReaderSupplements supplements = new FileReaderSupplements();
         supplements.readSupplementsFromFile("online_shop_database.txt");
 
-//        List<BaseProtein> proteinList = supplements.getProteins();
-//        List<BaseAminoAcid> aminoAcidList = supplements.getAminoAcids();
-
-        Map<String, List<BaseProtein>> mapProtein = supplements.getProteinz();
-        Map<String, List<BaseAminoAcid>> mapAmino = supplements.getAminos();
+//        Map<String, List<BaseProtein>> mapProtein = supplements.getProteinz();
+//        Map<String, List<BaseAminoAcid>> mapAmino = supplements.getAminos();
+        Map<String, List<BaseModel>> mapProducts = supplements.getBaseModel();
 
         // Set up the main frame
         setTitle("Supplement Store App");
@@ -45,7 +44,8 @@ public class SwingApp extends JFrame {
 //        leftPanel.setBackground(Color.red);
         leftPanel.setBorder(border);
         leftPanel.setBounds(0,0,250,600);
-        leftPanel.setLayout(null);
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+//        leftPanel.setLayout(null);
         add(leftPanel);
 
         // rightPanel
@@ -58,7 +58,6 @@ public class SwingApp extends JFrame {
 
         // Configure cart
         shoppingCart = new ShoppingCart();
-//        showShoppingCart();
 
         // Welcome label
         welcomeLabel1 = new JLabel("WELCOME !!!");
@@ -76,20 +75,11 @@ public class SwingApp extends JFrame {
         categoryLabelProteins.setBounds(5,20,100,20);
         leftPanel.add(categoryLabelProteins);
 
-        // Subcategories for Proteins
-        createButtonsForProteins(leftPanel, mapProtein);
-
-        // Category AminoAcids
-        JLabel categoryLabelAminoAcids = new JLabel("Amino Acids");
-        categoryLabelAminoAcids.setBounds(5,125,100,20);
-        leftPanel.add(categoryLabelAminoAcids);
-
-        // Subcategories for AminoAcids
-        createButtonsForAminoAcids(leftPanel, mapAmino);
+        // Create buttons for all categories
+        createButtons(leftPanel, mapProducts);
     }
 
     private void showShoppingCart() {
-        shoppingCart = new ShoppingCart();
         ImageIcon icon = shoppingCart.getIcon();
         JLabel labelIcon = new JLabel(icon);
         labelIcon.setLayout(null);
@@ -106,109 +96,94 @@ public class SwingApp extends JFrame {
         rightPanel.add(buttonCart);
     }
 
-    private void createButtonsForAminoAcids(Container container, Map<String, List<BaseAminoAcid>> amino) {
-        int yPosition = 150;
-        for (Map.Entry<String, List<BaseAminoAcid>> entry : amino.entrySet()) {
-            JButton button = new JButton(entry.getKey()); // Use the actual property of the protein
-            button.setBounds(20, yPosition, 150, 20);
-            container.add(button);
+    private void createButtons(Container container, Map<String, List<BaseModel>> model) {
+        int counterLabels = 0;
+        Insets buttonMargin = new Insets(5, 10, 5, 10); // Top, Left, Bottom, Right margins inside button
+        int verticalSpacing = 5; // Space between buttons
 
-            // Add ActionListener to handle button clicks
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Handle the click event for the protein
-                    displayProducts(null, entry.getValue()); // Use the actual property of the protein
+        for (Map.Entry<String, List<BaseModel>> entry : model.entrySet()) {
+            String key = entry.getKey();
+            if (key.contains("protein")) {
+
+                JButton button = new JButton(entry.getKey());
+                button.setMargin(buttonMargin);
+                button.setAlignmentX(0.05f);
+                container.add(button);
+                container.add(Box.createVerticalStrut(verticalSpacing));
+
+                // Add ActionListener to handle button clicks
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Handle the click event for the protein
+                        displayBaseModelProducts(entry.getValue());
+                    }
+                });
+            } else if (key.contains("supplements")) {
+                if (counterLabels != 1) {
+                    JLabel categoryLabelAminoAcids = new JLabel("Amino Acids");
+                    container.add(categoryLabelAminoAcids);
+                    counterLabels++;
                 }
-            });
 
-            yPosition += 23; // Adjust the vertical spacing
+                JButton button = new JButton(entry.getKey());
+                button.setMargin(buttonMargin);
+                button.setAlignmentX(0.05f);
+                container.add(button);
+                container.add(Box.createVerticalStrut(verticalSpacing));
+
+                // Add ActionListener to handle button clicks
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Handle the click event for the protein
+                        displayBaseModelProducts(entry.getValue());
+                    }
+                });
+            }
         }
     }
 
-    private void createButtonsForProteins(Container container, Map<String,List<BaseProtein>> proteins) {
-        int yPosition = 50;
-        for (Map.Entry<String, List<BaseProtein>> entry : proteins.entrySet()) {
-            JButton button = new JButton(entry.getKey()); // Use the actual property of the protein
-            button.setBounds(20, yPosition, 150, 20);
-            container.add(button);
-
-            // Add ActionListener to handle button clicks
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Handle the click event for the protein
-                    displayProducts(entry.getValue(), null); // Use the actual property of the protein
-                }
-            });
-
-            yPosition += 23; // Adjust the vertical spacing
-        }
-    }
-    // Method to display products based on the selected category
-    private void displayProducts(List<BaseProtein> proteins, List<BaseAminoAcid> aminoAcids) {
+    private void displayBaseModelProducts(List<BaseModel> modelList) {
         rightPanel.removeAll();
         revalidate();
         repaint();
         showShoppingCart();
-        if (proteins != null) {
-            int x = 30;
-            for (BaseProtein currentProtein : proteins) {
-                JLabel product = new JLabel();
-                ImageIcon icon = currentProtein.getImageIcon();
+        int x = 30;
+        for (BaseModel currentProduct : modelList) {
+            JLabel product = new JLabel();
+            ImageIcon icon = currentProduct.getImageIcon();
 
-                // Set layout to BorderLayout for proper alignment
-                product.setLayout(new BorderLayout());
-                product.setBorder(border);
+            // Set layout to BorderLayout for proper alignment
+            product.setLayout(new BorderLayout());
+            product.setBorder(border);
 
-                // Add components to product label with proper alignment
-                product.add(new JLabel(currentProtein.getName()), BorderLayout.NORTH);
-                product.add(new JLabel(icon), BorderLayout.CENTER);
-                product.add(new JLabel("Price: " + currentProtein.getPrice() + " lv."), BorderLayout.SOUTH);
+            // Add components to product label with proper alignment
+            product.add(new JLabel(currentProduct.getName()), BorderLayout.NORTH);
+            product.add(new JLabel(icon), BorderLayout.CENTER);
+            product.add(new JLabel("Price: " + currentProduct.getPrice() + " lv."), BorderLayout.SOUTH);
 
-                // Set bounds for the product label
-                product.setBounds(x, 10, 200, 200);
+            // Set bounds for the product label
+            product.setBounds(x, 10, 200, 200);
 
-                JButton addToCartButton = new JButton("Add to Cart");
-                addToCartButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        shoppingCart.addProduct(currentProtein, 1);
-                        System.out.println("Added in the cart");
-                    }
-                });
-                product.add(addToCartButton, BorderLayout.SOUTH);
+            JButton addToCartButton = new JButton("Add to Cart");
+            addToCartButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    shoppingCart.addProduct(currentProduct, 1);
+                    System.out.println("Added in the cart");
+                }
+            });
+            product.add(addToCartButton, BorderLayout.SOUTH);
 
-                rightPanel.add(product);
-                x = x + 210; // Adjust the horizontal spacing
-            }
-        } else {
-            int x = 30;
-            for (BaseAminoAcid currentAmino : aminoAcids) {
-                JLabel product = new JLabel();
-                ImageIcon icon = currentAmino.getImageIcon();
-
-                // Set layout to BorderLayout for proper alignment
-                product.setLayout(new BorderLayout());
-                product.setBorder(border);
-
-                // Add components to product label with proper alignment
-                product.add(new JLabel(currentAmino.getName()), BorderLayout.NORTH);
-                product.add(new JLabel(icon), BorderLayout.CENTER);
-                product.add(new JLabel("Price: " + currentAmino.getPrice() + " lv."), BorderLayout.SOUTH);
-
-                // Set bounds for the product label
-                product.setBounds(x, 10, 200, 200);
-
-                rightPanel.add(product);
-                x = x + 210; // Adjust the horizontal spacing
-            }
+            rightPanel.add(product);
+            x = x + 210; // Adjust the horizontal spacing
         }
         rightPanel.revalidate();
         rightPanel.repaint();
-//        JOptionPane.showMessageDialog(this, "Displaying products for: " + category);
     }
-
 }
+
+
 
 

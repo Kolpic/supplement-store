@@ -1,6 +1,7 @@
 package org.example.model.shoppingcart;
 
 import lombok.Getter;
+import org.example.model.BaseModel;
 import org.example.model.protein.BaseProtein;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.util.List;
 @Getter
 public class ShoppingCart {
     private ImageIcon icon;
-    private List<BaseProtein> products;
+    private List<BaseModel> products;
     private List<Integer> quantities;
 
     public ShoppingCart() {
@@ -19,12 +20,20 @@ public class ShoppingCart {
         icon = new ImageIcon("src\\main\\resources\\images/shoppingCart.jpg");
     }
 
-    public void addProduct(BaseProtein product, int quantity) {
+    public void addProduct(BaseModel product, int quantity) {
         products.add(product);
         quantities.add(quantity);
     }
 
-    public void removeProduct(BaseProtein product) {
+    public int getItemCount() {
+        int count = 0;
+        for (int quantity : quantities) {
+            count += quantity;
+        }
+        return count;
+    }
+
+    public void removeProduct(BaseModel product) {
         int index = products.indexOf(product);
         if (index != -1) {
             products.remove(index);

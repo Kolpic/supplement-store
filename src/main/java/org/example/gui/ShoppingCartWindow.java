@@ -1,6 +1,7 @@
 package org.example.gui;
 
 import lombok.Getter;
+import org.example.model.BaseModel;
 import org.example.model.shoppingcart.ShoppingCart;
 import org.example.model.protein.BaseProtein;
 
@@ -26,7 +27,7 @@ public class ShoppingCartWindow extends JFrame {
 
         // Populate the table with data from the shopping cart
         double sumOfAllProducts = 0.00;
-        for (BaseProtein product : shoppingCart.getProducts()) { // Assuming ShoppingCart has a getProducts() method
+        for (BaseModel product : shoppingCart.getProducts()) { // Assuming ShoppingCart has a getProducts() method
             double overallPrice = product.getPrice() * shoppingCart.getQuantities().get(0);
             sumOfAllProducts += overallPrice;
             Object[] row = {product.getName(), shoppingCart.getQuantities().remove(0), product.getPrice(), overallPrice};
