@@ -29,8 +29,6 @@ public class SwingApp extends JFrame {
         FileReaderSupplements supplements = new FileReaderSupplements();
         supplements.readSupplementsFromFile("online_shop_database.txt");
 
-//        Map<String, List<BaseProtein>> mapProtein = supplements.getProteinz();
-//        Map<String, List<BaseAminoAcid>> mapAmino = supplements.getAminos();
         Map<String, List<BaseModel>> mapProducts = supplements.getBaseModel();
 
         // Set up the main frame
@@ -42,16 +40,13 @@ public class SwingApp extends JFrame {
 
         // leftPanel
         JPanel leftPanel = new JPanel();
-//        leftPanel.setBackground(Color.red);
         leftPanel.setBorder(border);
         leftPanel.setBounds(0,0,250,600);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-//        leftPanel.setLayout(null);
         add(leftPanel);
 
         // rightPanel
         rightPanel = new JPanel();
-//        rightPanel.setBackground(Color.blue);
         rightPanel.setBorder(border);
         rightPanel.setBounds(250,0,550,600);
         rightPanel.setLayout(null);

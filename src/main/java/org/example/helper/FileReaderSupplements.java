@@ -20,8 +20,6 @@ import java.util.*;
 @Getter
 public class FileReaderSupplements {
 
-    private Map<String, List<BaseProtein>> proteinz = new HashMap<>();
-    private Map<String, List<BaseAminoAcid>> aminos = new HashMap<>();
     private Map<String, List<BaseModel>> baseModel = new LinkedHashMap<>();
 
     // TODO: Да махна листовете и да оптимизирам добавянето
@@ -55,13 +53,6 @@ public class FileReaderSupplements {
                         } else {
                             baseModel.get(subCategory).add(currentProtein);
                         }
-                        //////////////////////////////////////////////////
-                        if (proteinz.get(subCategory) == null) {
-                            proteinz.put(subCategory, new ArrayList<>());
-                            proteinz.get(subCategory).add(currentProtein);
-                        } else {
-                            proteinz.get(subCategory).add(currentProtein);
-                        }
                     } else if (subCategory.equals("protein isolate") && categoryName.equals("proteins")) {
                         currentProtein = new ProteinIsolate(productName, price, imageIcon);
                         if (baseModel.get(subCategory) == null) {
@@ -69,13 +60,6 @@ public class FileReaderSupplements {
                             baseModel.get(subCategory).add(currentProtein);
                         } else {
                             baseModel.get(subCategory).add(currentProtein);
-                        }
-                        //////////////////////////////////////////////////
-                        if (proteinz.get(subCategory) == null) {
-                            proteinz.put(subCategory, new ArrayList<>());
-                            proteinz.get(subCategory).add(currentProtein);
-                        } else {
-                            proteinz.get(subCategory).add(currentProtein);
                         }
                     } else if (subCategory.equals("vegan protein") && categoryName.equals("proteins")) {
                         currentProtein = new VeganProtein(productName, price, imageIcon);
@@ -85,13 +69,6 @@ public class FileReaderSupplements {
                         } else {
                             baseModel.get(subCategory).add(currentProtein);
                         }
-                        //////////////////////////////////////////////////
-                        if (proteinz.get(subCategory) == null) {
-                            proteinz.put(subCategory, new ArrayList<>());
-                            proteinz.get(subCategory).add(currentProtein);
-                        } else {
-                            proteinz.get(subCategory).add(currentProtein);
-                        }
                     } else if (subCategory.equals("BCAA supplements") && categoryName.equals("amino acids")) {
                         currentAminoAcid = new BCAA(productName, price, imageIcon);
                         if (baseModel.get(subCategory) == null) {
@@ -99,13 +76,6 @@ public class FileReaderSupplements {
                             baseModel.get(subCategory).add(currentAminoAcid);
                         } else {
                             baseModel.get(subCategory).add(currentAminoAcid);
-                        }
-                        //////////////////////////////////////////////////
-                        if (aminos.get(subCategory) == null) {
-                            aminos.put(subCategory, new ArrayList<>());
-                            aminos.get(subCategory).add(currentAminoAcid);
-                        } else {
-                            aminos.get(subCategory).add(currentAminoAcid);
                         }
                     } else if (subCategory.equals("EAA supplements") && categoryName.equals("amino acids")) {
                         currentAminoAcid = new EAA(productName, price, imageIcon);
@@ -115,13 +85,6 @@ public class FileReaderSupplements {
                         } else {
                             baseModel.get(subCategory).add(currentAminoAcid);
                         }
-                        //////////////////////////////////////////////////
-                        if (aminos.get(subCategory) == null) {
-                            aminos.put(subCategory, new ArrayList<>());
-                            aminos.get(subCategory).add(currentAminoAcid);
-                        } else {
-                            aminos.get(subCategory).add(currentAminoAcid);
-                        }
                     } else if (subCategory.equals("L-Carnitine supplements") && categoryName.equals("amino acids")) {
                         currentAminoAcid = new LCarnitine(productName, price, imageIcon);
                         if (baseModel.get(subCategory) == null) {
@@ -129,13 +92,6 @@ public class FileReaderSupplements {
                             baseModel.get(subCategory).add(currentAminoAcid);
                         } else {
                             baseModel.get(subCategory).add(currentAminoAcid);
-                        }
-                        //////////////////////////////////////////////////
-                        if (aminos.get(subCategory) == null) {
-                            aminos.put(subCategory, new ArrayList<>());
-                            aminos.get(subCategory).add(currentAminoAcid);
-                        } else {
-                            aminos.get(subCategory).add(currentAminoAcid);
                         }
                     }
                 }
