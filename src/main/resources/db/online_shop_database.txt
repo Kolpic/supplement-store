@@ -1,0 +1,22 @@
+<proteins>
+    _whey protein
+        *Impact Whey Protein,99.99,images\impactWheyProtein.jpg
+        *True Whey Protein,79.99,images\trueWheyProtein.jpg
+    _protein isolate
+        *Clear Whey Protein,110.99,images\clearWheyProteinIsolate.jpg
+        *Pea Protein Isolate,105.99,images\peaProteinIsolate.jpg
+    _vegan protein
+        *Vegan Protein Blend,119.99,images\veganProteinBlend.jpg
+        *Clear Vegan Protein,115.99,images\clearVeganProtein.jpg
+</proteins>
+<amino acids>
+    _BCAA supplements
+        *Essential BCAA 2:1:1 Powder,50.99,images\essentialBCAA211Powder.jpg
+        *Essential BCAA 4:1:1 Powder,55.99,images\essentialBCAA411Powder.jpg
+    _EAA supplements
+        *Impact EAA Stick Pack,1.99,images\impactEAAStickPack.jpg
+        *Impact EAA Starter Pack,45.99,images\impactEAAStarterPack.jpg
+    _L-Carnitine supplements
+        *Liquid L Carnitine Drink,50.99,images\liquidLCarnitineDrink.jpg
+        *100% Acetyl L-Carnitine Amino Acid,60.99,images\acetylLCarnitineAminoAcid.jpg
+</amino acids>
