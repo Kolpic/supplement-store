@@ -17,6 +17,7 @@ import java.util.Map;
 public class SwingApp extends JFrame {
 
     private ShoppingCart shoppingCart;
+    private JLabel cartItemCountLabel;
     private JPanel cartPanel;
     private JPanel rightPanel;
     private JLabel welcomeLabel1;
@@ -85,6 +86,14 @@ public class SwingApp extends JFrame {
         labelIcon.setLayout(null);
         labelIcon.setBounds(20, 450, 100, 100);
         rightPanel.add(labelIcon);
+
+        cartItemCountLabel = new JLabel();
+        cartItemCountLabel.setBounds(130, 500, 200, 20); // Adjust as needed
+        rightPanel.add(cartItemCountLabel);
+
+        cartItemCountLabel.setText("You have " + shoppingCart.getItemCount() + " items in the cart.");
+        updateCartItemCountLabel();
+
         Button buttonCart = new Button("View Cart");
         buttonCart.setBounds(25, 550, 100, 25);
         buttonCart.addActionListener(new ActionListener() {
@@ -94,6 +103,12 @@ public class SwingApp extends JFrame {
             }
         });
         rightPanel.add(buttonCart);
+    }
+    // Call this method whenever you add or remove a product from the cart
+    public void updateCartItemCountLabel() {
+        cartItemCountLabel.setText("You have " + shoppingCart.getItemCount() + " items in the cart.");
+        rightPanel.revalidate();
+        rightPanel.repaint();
     }
 
     private void createButtons(Container container, Map<String, List<BaseModel>> model) {
@@ -171,6 +186,7 @@ public class SwingApp extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     shoppingCart.addProduct(currentProduct, 1);
+                    updateCartItemCountLabel();
                     System.out.println("Added in the cart");
                 }
             });
