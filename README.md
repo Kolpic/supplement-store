@@ -31,3 +31,24 @@ It leverages Java's AWT and Swing libraries to deliver a robust user interface t
    - Implements comparators for sorting functionality.
    - Data management through file reading instead of a traditional database.
    - Responsive UI
+
+## Pictures
+- Welcome window
+
+![welcome ](https://github.com/Kolpic/supplement-store/assets/106113997/3e1fa971-d099-4978-8e3b-bda442513a9f)
+
+- Whey protein window
+
+![whey prot](https://github.com/Kolpic/supplement-store/assets/106113997/f6a640a0-0982-4ed8-9c1c-a2697df4f112)
+
+- Adding in cart
+
+![Isolate prot](https://github.com/Kolpic/supplement-store/assets/106113997/0878d9d7-ed1b-4ccb-9106-14b2af799396)
+
+- Checkout cart
+
+![cart](https://github.com/Kolpic/supplement-store/assets/106113997/3d515336-0c4d-4378-b4b5-0ab9ff5cf9a5)
+
+
+
+
